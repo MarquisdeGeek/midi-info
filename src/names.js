@@ -399,11 +399,42 @@ function getNoteFromMIDI(midiNote) {
 }
 
 
+// name might be D# or Eb, but must map to the same thing
+// (even though we only go one way with szNoteName)
+function getMIDIFronName(name) {
+    const mapping = [
+    {name: "C",  idx: 0 },
+    {name: "C#", idx: 1 },
+    {name: "Db", idx: 1 },
+    {name: "D",  idx: 2 },
+    {name: "D#", idx: 3 },
+    {name: "Eb", idx: 3 },
+    {name: "E",  idx: 4 },
+    {name: "F",  idx: 5 },
+    {name: "F#", idx: 6 },
+    {name: "Gb", idx: 6 },
+    {name: "G",  idx: 7 },
+    {name: "G#", idx: 8 },
+    {name: "Ab", idx: 8 },
+    {name: "A",  idx: 9 },
+    {name: "A#", idx: 10 },
+    {name: "Bb", idx: 10 },
+    {name: "B",  idx: 11 },
+];
+
+const result = mapping.filter((ref) => ref.name === name);
+
+    return result.length ? result[0].idx : 0;
+}
+
+
+
 module.exports = {
     getProgram,
     getDrum,
     getCC,
     getNoteFromMIDI,
+    getMIDIFronName,
     // Aliases
     getControlChange: getCC,
 };
