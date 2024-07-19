@@ -19,6 +19,9 @@ const PulsesConstants = require('./pulses-constants');
 /** Human-friendly names */
 const Names = require('./names');
 
+/** Code to process MIDI messages */
+const Messages = require('./messages');
+
 /** Chord generation */
 const Chords = require('./chords');
 
@@ -36,6 +39,7 @@ module.exports = {
         Pulses:         PulsesConstants,
     },
 
+    Messages,
     Names,
     Chords,
     Notes
