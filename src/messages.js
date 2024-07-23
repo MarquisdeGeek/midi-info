@@ -8,7 +8,7 @@ function validChannel(c) {
 }
 
 function limitTo7Bits(v) {
-    return Math.min(0, Math.max(v, 0x7f));
+    return Math.max(0, Math.min(v, 0x7f));
 }
 
 
