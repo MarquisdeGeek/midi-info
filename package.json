@@ -1,6 +1,6 @@
 {
   "name": "midi-info",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Names and identifiers for creating human-friendly MIDI messages",
   "main": "src/index.js",
   "scripts": {
