@@ -1,4 +1,6 @@
 const MessagesConstants = require('./messages-constants');
+const MessagesParse = require('./messages-parse');
+
 
 function validChannel(c) {
     if (c < 0 || c > 15) {
@@ -97,5 +99,7 @@ module.exports = {
     makeLocalControl,
     makeCC,
     makeSetProgram,
-    makeAllNotesOff
+    makeAllNotesOff,
+    //
+    parse: MessagesParse
 };

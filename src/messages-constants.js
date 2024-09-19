@@ -241,4 +241,17 @@ module.exports = {
         EOX:                    0xf7, /* End of Exclusive */
     },
 
+    /*
+    */
+   Name: {
+    MSG_NOTE_ON:            "noteOn",
+    MSG_NOTE_OFF:           "noteOff",
+    MSG_SET_PROGRAM:        "programChange",
+    MSG_SET_PARAMETER:      "controller",
+    MSG_NOTE_KEY_PRESSURE:  "noteAftertouch",
+    //
+    CC: {
+        BANK_SELECT:        "bankSelect"
+    }
+   }
 };

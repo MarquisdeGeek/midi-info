@@ -1,3 +1,6 @@
+const Notes = require('./notes');
+
+
 // Chord logic
 function isNoteWhite(pitch) {
     return !isNoteBlack(pitch);
@@ -13,6 +16,39 @@ function isNoteBlack(pitch) {
 // BUGWARN: Not accurate in the general case
 function isMajorChord(noteList) {
     return noteList[1] - noteList[0] === 4;
+}
+
+
+// Parse out the name. We need:
+// 1. The primary note (0-11)
+// 2. The maj/minor-ness of it
+// 3. Extras
+// We assume this name is well-formed, as in "Cm7/G"
+function parseChordFromName(chordName) {
+    // TODO: Support suspended chords, +/- notation, bb, ##, etc
+    const re = new RegExp("([a-gA-G][b#]?)(min|maj|Min|Maj|m|M|aug|dim)?([0-9]+)?(?:\/([a-gA-G](b|#)?))?");
+    const results = re.exec(chordName);
+    /*
+    [1] = chord name
+    [2] = maj/min (defaults to major, if none given)
+    [3] = added Nths
+    [4] = bass
+    */
+
+    if (!results) {
+        return undefined;
+    }
+
+    return {
+        chordRoot:          Notes.parseNoteName(results[1]),
+        chordRootName:      results[1],
+        bassNote:           results[4] ? Notes.parseNoteName(results[4]) : Notes.parseNoteName(results[1]),
+        addedNotes:         results[3] ? parseInt(results[3], 10) : 0,
+        isAugmented:        results[2] && results[2] === "aug" ? true : false,
+        isDimnished:        results[2] && results[2] === "dim" ? true : false,
+        isMajor:            typeof results[2] === typeof undefined || results[2] === "M" || results[2] === "maj" || results[2] === "Maj" ? true : false,
+        isMinor:            results[2] === "m" || results[2] === "min" || results[2] === "Min" ? true : false
+    }
 }
 
 
@@ -92,6 +128,7 @@ function makeDiminished(root) {
 
 module.exports = {
     guessChord,
+    parseChordFromName,
     //
     isMajorChord,
     //
