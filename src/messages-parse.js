@@ -88,7 +88,6 @@ function unpack(data) {
     }
     //
     if (isSetProgram(data)) { // C0
-        console.log("ET", data)
         return {
             type:           MessagesConstants.Name.MSG_SET_PROGRAM,
             channel:        data[0] & 0x0f,
