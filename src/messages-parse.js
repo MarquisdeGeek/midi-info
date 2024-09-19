@@ -98,7 +98,6 @@ function unpack(data) {
 
     // CC
     if (isBankSelect(data)) {
-        console.log("isBankSelect")
         return {
             type:           MessagesConstants.Name.MSG_SET_PARAMETER,
             channel:        data[0] & 0x0f,
