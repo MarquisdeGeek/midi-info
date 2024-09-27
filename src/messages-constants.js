@@ -252,6 +252,8 @@ module.exports = {
         MARKER:               0x06,
         CUE_MARKER:           0x07,
         DEVICE_NAME:          0x08,
+        //
+        TEMPO:                0x51,
     },
 
     /*
@@ -271,6 +273,8 @@ module.exports = {
         LYRICS:             "lyrics",
         MARKER:             "marker",
         CUE_MARKER:         "cuePoint",
+        //
+        TEMPO:              "setTempo",
     },
     //
     CC: {

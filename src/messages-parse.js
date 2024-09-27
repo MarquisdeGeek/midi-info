@@ -75,6 +75,20 @@ function getMetaString(data) {
 }
 
 
+function getMetaNumeric(data) {
+    if (data && data.length && data[0] === 0xff) {
+        const metaMessage = data[1];
+
+        switch (metaMessage) {
+            case MessagesConstants.meta.TEMPO:
+                return MessagesConstants.Name.META.TEMPO;
+        }
+    }
+
+    return undefined;
+}
+
+
 // CC
 function isBankSelect(data) {
     if ((data[0] & 0xf0) !== MessagesConstants.SET_PARAMETER) {
@@ -157,6 +171,19 @@ function unpack(data) {
             type:           metaTypeString,
             text:           rebuiltString
         };
+    }
+
+    const metaTypeNumeric = getMetaNumeric(data);
+    if (metaTypeNumeric) {
+        const msg = {
+            type:           metaTypeNumeric,
+        };
+
+        if (metaTypeNumeric === MessagesConstants.Name.META.TEMPO) {
+            msg.microsecondsPerBeat = (((data[3] << 8) | data[4]) << 8) | data[5];
+        }
+
+        return msg;
     }
 
     // TODO: Add the rest, when needed. (Or it's time to do busy work!)

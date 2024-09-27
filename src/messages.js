@@ -97,9 +97,25 @@ function makeMetaMarker(text) {
     return makeMetaMessageString(MessagesConstants.meta.MARKER, text);
 }
 
-function makeTrackName(text) {
+function makeMetaTrackName(text) {
     return makeMetaMessageString(MessagesConstants.meta.TRACK_NAME, text);
 }
+
+
+function makeMetaTempoBPM(bpm) {
+    let microsecondsPQN = 60000000 / bpm;
+    let b1 = (microsecondsPQN >> 16) & 0xff;
+    let b2 = (microsecondsPQN >>  8) & 0xff;
+    let b3 = (microsecondsPQN >>  0) & 0xff;
+
+    return [
+        MessagesConstants.METAEVENT,
+        MessagesConstants.meta.TEMPO,
+        3,
+        b1, b2, b3
+    ];
+}
+
 
 
 function makeMetaMessageString(metaID, text) {
@@ -130,7 +146,8 @@ module.exports = {
     makeAllNotesOff,
     //
     makeMetaMarker,
-    makeTrackName,
+    makeMetaTrackName,
+    makeMetaTempoBPM,
     //
     parse: MessagesParse
 };
