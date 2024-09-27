@@ -241,6 +241,19 @@ module.exports = {
         EOX:                    0xf7, /* End of Exclusive */
     },
 
+    // Meta - not for sending to devices, but for writing to files
+    meta: {
+        SEQUENCE:             0x00,
+        TEXT:                 0x01,
+        COPYRIGHT:            0x02,
+        TRACK_NAME:           0x03,
+        INSTRUMENT_NAME:      0x04,
+        LYRICS:               0x05,
+        MARKER:               0x06,
+        CUE_MARKER:           0x07,
+        DEVICE_NAME:          0x08,
+    },
+
     /*
     */
    Name: {
@@ -249,6 +262,16 @@ module.exports = {
     MSG_SET_PROGRAM:        "programChange",
     MSG_SET_PARAMETER:      "controller",
     MSG_NOTE_KEY_PRESSURE:  "noteAftertouch",
+    //
+    META: {
+        TEXT:               "text",
+        COPYRIGHT:          "copyrightNotice",
+        TRACK_NAME:         "trackName",
+        INSTRUMENT_NAME:    "instrumentName",
+        LYRICS:             "lyrics",
+        MARKER:             "marker",
+        CUE_MARKER:         "cuePoint",
+    },
     //
     CC: {
         BANK_SELECT:        "bankSelect"

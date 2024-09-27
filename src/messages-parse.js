@@ -42,6 +42,39 @@ function isNotePressure(data) {
 }
 
 
+// Meta
+function getMetaString(data) {
+    if (data && data.length && data[0] === 0xff) {
+        const metaMessage = data[1];
+
+        switch (metaMessage) {
+            case MessagesConstants.meta.TEXT:
+                return MessagesConstants.Name.META.TEXT;
+
+            case MessagesConstants.meta.COPYRIGHT:
+                return MessagesConstants.Name.META.COPYRIGHT;
+
+            case MessagesConstants.meta.TRACK_NAME:
+                return MessagesConstants.Name.META.TRACK_NAME;
+
+            case MessagesConstants.meta.INSTRUMENT_NAME:
+                return MessagesConstants.Name.META.INSTRUMENT_NAME;
+
+            case MessagesConstants.meta.LYRICS:
+                return MessagesConstants.Name.META.LYRICS;
+
+            case MessagesConstants.meta.MARKER:
+                return MessagesConstants.Name.META.MARKER;
+
+            case MessagesConstants.meta.CUE_MARKER:
+                return MessagesConstants.Name.META.CUE_MARKER;
+        }
+    }
+
+    return undefined;
+}
+
+
 // CC
 function isBankSelect(data) {
     if ((data[0] & 0xf0) !== MessagesConstants.SET_PARAMETER) {
@@ -108,6 +141,23 @@ function unpack(data) {
         };
     }
     
+
+    // Meta
+    const metaTypeString = getMetaString(data);
+    if (metaTypeString) {
+        const rebuiltStringAsArray = data.map((d, idx) => {
+            if (idx > 2) {
+                return String.fromCharCode(d);
+            }
+            return '';
+        });
+        const rebuiltString = rebuiltStringAsArray.join('');
+
+        return {
+            type:           metaTypeString,
+            text:           rebuiltString
+        };
+    }
 
     // TODO: Add the rest, when needed. (Or it's time to do busy work!)
     return undefined;

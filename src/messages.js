@@ -93,6 +93,34 @@ function makeAllNotesOff(channel) {
 }
 
 
+function makeMetaMarker(text) {
+    return makeMetaMessageString(MessagesConstants.meta.MARKER, text);
+}
+
+function makeTrackName(text) {
+    return makeMetaMessageString(MessagesConstants.meta.TRACK_NAME, text);
+}
+
+
+function makeMetaMessageString(metaID, text) {
+    if (text.length > 127) {
+        return [];
+    }
+    //
+    let msg = [
+        MessagesConstants.METAEVENT,
+        metaID,
+    ];
+
+    msg.push(text.length);
+    text.split("").forEach((c) => {
+        msg.push((c.charCodeAt(0)) & 0x7f);
+    })
+
+    return msg;
+}
+
+
 module.exports = {
     makeNoteOn,
     makeNoteOff,
@@ -100,6 +128,9 @@ module.exports = {
     makeCC,
     makeSetProgram,
     makeAllNotesOff,
+    //
+    makeMetaMarker,
+    makeTrackName,
     //
     parse: MessagesParse
 };
