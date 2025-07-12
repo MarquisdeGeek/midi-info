@@ -13,6 +13,10 @@ function limitTo7Bits(v) {
     return Math.max(0, Math.min(v, 0x7f));
 }
 
+function limitTo14Bits(v) {
+    return Math.max(0, Math.min(v, 0x3fff));
+}
+
 
 function makeCC(channel, ccMsg, ccParam) {
     if (!validChannel(channel)) {
@@ -93,6 +97,21 @@ function makeAllNotesOff(channel) {
 }
 
 
+function makeSetPitchWheel(channel, value) {
+    if (!validChannel(channel)) {
+        return []
+    }
+    
+    const value14 = limitTo14Bits(value);
+
+    return [
+        MessagesConstants.SET_PITCHWHEEL | channel,
+        (value14 & 0x7f),       // LSB
+        (value14 >> 7) & 0x7f   // MSB
+    ];
+}
+
+
 function makeMetaMarker(text) {
     return makeMetaMessageString(MessagesConstants.meta.MARKER, text);
 }
@@ -144,6 +163,7 @@ module.exports = {
     makeCC,
     makeSetProgram,
     makeAllNotesOff,
+    makeSetPitchWheel,
     //
     makeMetaMarker,
     makeMetaTrackName,
